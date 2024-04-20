@@ -75,6 +75,7 @@ p{
     width: calc(25% - 5px);
     min-width: 100px;
     background: var(--primary-color);  
+    border: none;
 }
 .skip{
     max-height: 40px;
