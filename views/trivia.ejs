@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body>
     <header class="header">
@@ -16,17 +16,18 @@
             <div class="trivia-card">
                 <div class="sub-header">
                     <p>Multiple Choice</p>
-                    <img src="/Images/right.svg" class="skip">
+                    <img src="../public/Images/right.svg" class="skip">
                 </div>
-                <p class="question">What is Elastic and On-Demand</p>
+                <p class="question"><%= question %></p>
                 <form class="answers" action="./userAnswer">
-                    <input type="submit" class="answer-card" value="answer 1" name="option1">
+                    <% answers.forEach(function(answer){})
+                    <input type="button" class="answer-card" value="A device used to distribute web traffic" name="option1">
                     
-                    <input type="submit" class="answer-card" value="answer 2" name="option2">
+                    <input type="button" class="answer-card" value="answer 2" name="option2">
                         
-                    <input type="submit" class="answer-card" value="answer 3" name="option3">
+                    <input type="button" class="answer-card" value="answer 3" name="option3">
                         
-                    <input type="submit" class="answer-card" value="answer 4" name="option4">
+                    <input type="button" class="answer-card" value="answer 4" name="option4">
                         
                 </form>
 
@@ -35,6 +36,6 @@
         </section>
     </main>
     
-    
+    <script src="../public/scripts/trivia.js" defer></script>
 </body>
 </html>

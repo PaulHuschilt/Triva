@@ -35,6 +35,8 @@ h2{
     min-width: 200px;
     background: var(--primary-color);
     margin-right: 10px;
+    color: beige;
+    text-decoration: none;
 }
 .card-title{
     text-align: center;
