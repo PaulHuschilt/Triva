@@ -1,3 +1,31 @@
+/*
+Page is loaded with the first question and the corresponding answers
+User clicks a multiple choice answer which can be either right or wrong
+The client saves the current question, asnwers, and correct answer
+After each question the current question, asnwers, and corecct answer should be updated
+And the next questions should loaded into the shadow DOM
+
+If it is correct an animation occurs removing the current question
+and displays the next question
+
+If it is wrong an animation occurs highlighting the wrong answer and the user is prompted to guess again
+
+After each selection and post should be made to an endpoint storing the guesses with the right and wrong guesses
+
+When the user reaches the end of the questions a webpage is displayed with the stats and the performance of the user
+
+User is finally prompted to either edit the deck or to review another
+
+CRUD:
+
+A user should be able to make a deck with MCQ, TF, and q cards/ definitions
+
+A user should be able to edit a deck by add/removing/editing questions and answers
+
+A user should be able to delete a deck
+*/
+
+// Initalize the JS
 document.addEventListener("DOMContentLoaded", init);
 
 const triviaCard = document.getElementsByClassName("trivia-card")[0];
@@ -29,6 +57,7 @@ async function init() {
   for (i; i < answers.length; i++) {
     answers[i].addEventListener("click", checkAnswer);
   }
+  
   console.log("Questions: " + questions);
   console.log(currentQuestion);
   console.log(currentAnswers);
@@ -105,7 +134,7 @@ function checkAnswer() {
   if (this.value == correctAnswer) {
     console.log("Correct Answer");
     clearTrivia();
-    
+
     createTrivia();
   }
 }
