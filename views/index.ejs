@@ -14,15 +14,17 @@
         <section>
             <h2>My Decks</h2>
             <div class="view">
+                <div class="addNew">
+                    <img src="../public/Images/Group 22.svg" class="icon">
+                </div>
                 <% data.forEach(function(deck){ %>
                     <a href="/trivia/1" class="card">
                         <div class="deck-name"><%= deck.name %></div>
                     </a>
                 <% }) %>
-               
             </div>
         </section>
     </main>
-    
+    <script src="../public/scripts/index.js" defer></script>
 </body>
 </html>
