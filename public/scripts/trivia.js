@@ -39,9 +39,11 @@ let correctAnswer;
 let currentCard;
 let questions
 async function init() {
-  console.log("Page loaded");
+  console.log("Page loaded " + window.location.pathname);
+  let requestedDeckID = location.pathname.slice(location.pathname.lastIndexOf("/"), location.pathname.length + 1)
+  console.log(requestedDeckID)
   try {
-    const response = await fetch("/trivia/data/1");
+    const response = await fetch("/trivia/data" + requestedDeckID);
     deck = await response.json();
     console.log(deck);
   } catch (error) {
@@ -57,7 +59,7 @@ async function init() {
   for (i; i < answers.length; i++) {
     answers[i].addEventListener("click", checkAnswer);
   }
-  
+
   console.log("Questions: " + questions);
   console.log(currentQuestion);
   console.log(currentAnswers);

@@ -42,14 +42,14 @@
         "id": 2,
         "questions": [
           {
-            "question": "What is a Load Balancer?",
+            "question": "Whats 1 + 2?",
             "answers": [
-              "A device used to distribute web traffic",
+              "Answer 1",
               "Answer 2",
-              "Answer 3",
+              "Its 3 bruv",
               "Answer 4"
             ],
-            "correctAnswer": "A device used to distribute web traffic"
+            "correctAnswer": "Its 3 bruv"
           }
         ]
       }

@@ -13,11 +13,17 @@ exports.renderHomePage = async (req, res) => {
       res.status(500).send("Internal Server Error");
     }
   };
+  
   exports.renderTrivia = async (req, res) => {
     const triviaId = req.params.triviaID
     console.log(triviaId)
+    const requestedDeck = decks.find((decks) =>{
+        if (decks.id == triviaId){
+            return true
+        }
+    })
     res.render("trivia", {
-        question: decks[0].questions[0].question,
-        answers: decks[0].questions[0].answers
+        question: requestedDeck.questions[0].question,
+        answers: requestedDeck.questions[0].answers
     })
   };
