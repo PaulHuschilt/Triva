@@ -67,7 +67,7 @@ h2{
     flex-direction: column;
     position: relative;
     background: var(--bg-color2);
-    height: 60vh;
+    height: 36rem;
     min-height: 400px;
     width: 80%;    
     margin-left: auto;
@@ -162,3 +162,32 @@ img.icon{
     width: 10rem;
     height: 10rem;
 }
+div.qresult{
+    background-color: var(--bg-color2);
+    border-radius: 16px;
+    padding: 8px;
+    margin-bottom: 8px;
+
+}
+div.qresult[data-result = "correct"]{
+    border: solid 1px green;
+}
+div.qresult[data-result = "incorrect"]{
+    border: solid 1px red;
+}
+h4{
+    color: beige;
+    text-align: center;
+}
+div.flex-container{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+input#back{
+    background: none;
+    border: none;
+    color: beige;
+    margin-left: 16px;
+}
+

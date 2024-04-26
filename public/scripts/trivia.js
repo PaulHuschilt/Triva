@@ -32,16 +32,40 @@ const triviaCard = document.getElementsByClassName("trivia-card")[0];
 // triviaCard.innerHTML = ""
 const question = document.getElementsByClassName("question");
 let answers = document.getElementsByClassName("answer-card");
+// The requested Deck
 let deck;
+
+//Current question of the deck
 let currentQuestion;
+
+//The current answers for the current question
 let currentAnswers;
+
+//The current correct answer for the current question
 let correctAnswer;
+
+//Current stage for the current question
 let currentCard;
-let questions
+
+//List of all the questions
+let questions;
+let playerMoves = {
+  questions: [],
+  answers: [],
+  results: [],
+};
 async function init() {
+    let back = document.getElementById("back")
+    back.onclick = () =>{
+        history.back()
+    }
   console.log("Page loaded " + window.location.pathname);
-  let requestedDeckID = location.pathname.slice(location.pathname.lastIndexOf("/"), location.pathname.length + 1)
-  console.log(requestedDeckID)
+  //The deck ID is the last value in the URL
+  let requestedDeckID = location.pathname.slice(
+    location.pathname.lastIndexOf("/"),
+    location.pathname.length + 1
+  );
+  console.log(requestedDeckID);
   try {
     const response = await fetch("/trivia/data" + requestedDeckID);
     deck = await response.json();
@@ -55,6 +79,8 @@ async function init() {
   currentQuestion = questions[currentCard].question;
   currentAnswers = questions[currentCard].answers;
   correctAnswer = questions[currentCard].correctAnswer;
+
+  //Adds the event lstener for the answers for a player move
   let i = 0;
   for (i; i < answers.length; i++) {
     answers[i].addEventListener("click", checkAnswer);
@@ -65,18 +91,22 @@ async function init() {
   console.log(currentAnswers);
   console.log(correctAnswer);
 }
-function clearTrivia(){
-    elements = document.querySelectorAll(".trivia-card")
-    elements.forEach(element => {
-        element.style.display = "none"
-        // Add more styles as needed
-    });
+function clearTrivia() {
+  elements = document.querySelectorAll(".trivia-card");
+  elements.forEach((element) => {
+    element.style.display = "none";
+    // Add more styles as needed
+  });
 }
+
+//Creates the trivia elements
 function createTrivia() {
+  // Sets the current stage This needs to be moved once animations are added
   currentCard += 1;
   currentQuestion = questions[currentCard].question;
   currentAnswers = questions[currentCard].answers;
   correctAnswer = questions[currentCard].correctAnswer;
+
   // Create a div element with class "trivia-card"
   const triviaCard = document.createElement("div");
   triviaCard.className = "trivia-card";
@@ -101,7 +131,7 @@ function createTrivia() {
   // Create a p element for the question text
   const question = document.createElement("p");
   question.className = "question";
-  question.textContent = currentQuestion; // Note: '<%= question %>' is a placeholder and needs to be replaced with the actual question text
+  question.textContent = currentQuestion;
 
   // Create a form element with class "answers" and action "./userAnswer"
   const answersForm = document.createElement("form");
@@ -130,13 +160,70 @@ function createTrivia() {
 }
 
 function checkAnswer() {
-  console.log("Check Answer");
-  console.log(this.value);
-  console.log(correctAnswer);
-  if (this.value == correctAnswer) {
-    console.log("Correct Answer");
-    clearTrivia();
+  console.log("You Guessed: " + this.value);
+  console.log("The correct answer: " + correctAnswer);
 
-    createTrivia();
+  playerMoves.questions.push(currentQuestion)
+  playerMoves.answers.push(this.value)
+  // If the guess is correct display positive result and store it
+  if (this.value == correctAnswer) {
+    console.log("Correct");
+    playerMoves.results.push(true)
+    console.log(playerMoves.results)
   }
+  //Otherwise display a negative result
+  else {
+    playerMoves.results.push(false)
+  }
+  clearTrivia();
+    if (currentCard != questions.length - 1) {
+      createTrivia();
+    } else {
+      console.log("No More Questions");
+      console.log(playerMoves)
+      console.log(playerMoves.questions)
+      console.log(playerMoves.answers)
+      console.log(playerMoves.results)
+      resultPage()
+    }
+}
+function resultPage() {
+    console.log(questions[0].correctAnswer);
+    let i = 0;
+    for (i; i < playerMoves.answers.length; i++){
+        let container = document.createElement("div")
+        container.classList.add("qresult")
+
+        let subHeader = document.createElement("h4")
+        subHeader.textContent = `${playerMoves.questions[i]}`
+
+        let flex = document.createElement("div")
+        flex.className = "flex-container"
+
+        let userGuess = document.createElement("p")
+        userGuess.textContent = `You Guessed: ${playerMoves.answers[i]}`
+        let userResult = document.createElement("p")
+        userResult.textContent = `Correct Answer: ${questions[i].correctAnswer}`
+
+        if (playerMoves.answers[i] == questions[i].correctAnswer){
+            container.setAttribute("data-result", "correct")
+        }
+        else{
+            container.setAttribute("data-result", "incorrect")
+        }
+
+        flex.appendChild(userGuess)
+        flex.appendChild(userResult)
+        container.appendChild(subHeader)
+        container.appendChild(flex)
+        document.body.appendChild(container)
+    }
+    let returnHome = document.createElement("input")
+    returnHome.type = "button"
+    returnHome.value = "Go Back"
+    returnHome.onclick = () =>{
+        history.back()
+    }
+    document.body.appendChild(returnHome)
+
 }
